@@ -1,0 +1,89 @@
+import csv
+
+import streamlit as st
+
+import main as reports
+
+
+st.set_page_config(
+    page_title="FactoryPilot AI",
+    layout="centered",
+)
+
+st.title("FactoryPilot AI")
+st.caption("Daily production reports for your factory")
+
+st.subheader("Add a daily report")
+
+with st.form("production_report_form"):
+    factory_name = st.text_input("Factory name")
+    daily_quantity = st.number_input(
+        "Today's production (units)",
+        min_value=0,
+        value=0,
+        step=1,
+    )
+    daily_target = st.number_input(
+        "Daily production target (units)",
+        min_value=1,
+        value=1,
+        step=1,
+    )
+    submitted = st.form_submit_button(
+        "Save report",
+        type="primary",
+        use_container_width=True,
+    )
+
+if submitted:
+    if not factory_name.strip():
+        st.error("Enter a factory name before saving the report.")
+    else:
+        try:
+            new_report = reports.build_report(
+                factory_name,
+                int(daily_quantity),
+                int(daily_target),
+            )
+            reports.save_report(new_report)
+        except ValueError as error:
+            st.error(str(error))
+        except (OSError, csv.Error) as error:
+            st.error(f"Could not save the report: {error}")
+        else:
+            st.success("Daily production report saved.")
+
+st.divider()
+st.subheader("Previous reports")
+
+try:
+    saved_reports = reports.read_saved_reports()
+except (OSError, csv.Error, UnicodeError) as error:
+    st.error(f"Could not read saved reports: {error}")
+else:
+    if not saved_reports:
+        st.info("No saved reports yet. Add a report above to get started.")
+    else:
+        table_rows = []
+
+        for report in saved_reports:
+            achieved = report.get("achieved_percentage") or "-"
+            if achieved != "-" and not achieved.endswith("%"):
+                achieved += "%"
+
+            table_rows.append(
+                {
+                    "Date": report.get("date") or "-",
+                    "Factory": report.get("factory_name") or "-",
+                    "Production (units)": report.get("production_quantity") or "-",
+                    "Target (units)": report.get("daily_target") or "-",
+                    "Achieved": achieved,
+                    "Target met": report.get("target_met") or "-",
+                }
+            )
+
+        st.dataframe(
+            table_rows,
+            width="stretch",
+            hide_index=True,
+        )
