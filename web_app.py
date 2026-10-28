@@ -113,3 +113,18 @@ else:
         col1.metric("Total Production", total_production)
         col2.metric("Total Target", total_target)
         col3.metric("Achievement", f"{achievement:.1f}%")
+
+        met_count = sum(
+            1 for report in saved_reports
+            if (report.get("target_met") or "").strip().lower() == "yes"
+        )
+        missed_count = sum(
+            1 for report in saved_reports
+            if (report.get("target_met") or "").strip().lower() == "no"
+        )
+
+        st.subheader("Target Performance")
+        col4, col5 = st.columns(2)
+        col4.metric("Target Met", met_count)
+        col5.metric("Target Missed", missed_count)
+        
