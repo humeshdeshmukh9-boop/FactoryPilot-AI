@@ -127,4 +127,17 @@ else:
         col4, col5 = st.columns(2)
         col4.metric("Target Met", met_count)
         col5.metric("Target Missed", missed_count)
-        
+
+        chart_data = {
+            "Production": [
+                int(report.get("production_quantity") or 0)
+                for report in saved_reports
+            ],
+            "Target": [
+                int(report.get("daily_target") or 0)
+                for report in saved_reports
+            ],
+        }
+
+        st.subheader("Production vs Target")
+        st.bar_chart(chart_data)
