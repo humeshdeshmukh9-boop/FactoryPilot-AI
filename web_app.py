@@ -11,6 +11,8 @@ st.set_page_config(
 )
 
 st.title("FactoryPilot AI")
+st.markdown("## Factory Production Dashboard")
+st.caption("Daily production performance at a glance")
 st.caption("Daily production reports for your factory")
 
 st.subheader("Add a daily report")
