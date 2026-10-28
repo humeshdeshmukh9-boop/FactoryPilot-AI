@@ -89,3 +89,27 @@ else:
             width="stretch",
             hide_index=True,
         )
+
+        st.divider()
+        st.subheader("Production Summary")
+
+        total_production = sum(
+            int(report.get("production_quantity") or 0)
+            for report in saved_reports
+        )
+        total_target = sum(
+            int(report.get("daily_target") or 0)
+            for report in saved_reports
+        )
+
+        achievement = (
+            total_production / total_target * 100
+            if total_target > 0
+            else 0
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric("Total Production", total_production)
+        col2.metric("Total Target", total_target)
+        col3.metric("Achievement", f"{achievement:.1f}%")
