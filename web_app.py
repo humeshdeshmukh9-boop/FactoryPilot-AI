@@ -1,4 +1,4 @@
-import csv
+⁶import csv
 
 import streamlit as st
 
@@ -141,3 +141,71 @@ else:
 
         st.subheader("Production vs Target")
         st.bar_chart(chart_data, stack=False)
+        
+        st.divider()
+
+st.header("Employee Performance")
+st.caption("Track individual and team production performance")
+
+employee_tab, team_tab = st.tabs(
+    ["Individual Employees", "Team Performance"]
+)
+
+with employee_tab:
+    st.subheader("Individual Employee Report")
+
+    with st.form("employee_performance_form"):
+        employee_name = st.text_input("Employee Name")
+        employee_id = st.text_input("Employee ID")
+        employee_target = st.number_input(
+            "Daily Target (units)", min_value=0, step=1
+        )
+        employee_actual = st.number_input(
+            "Actual Production (units)", min_value=0, step=1
+        )
+
+        employee_submit = st.form_submit_button(
+            "Calculate Performance"
+        )
+
+    if employee_submit:
+        if employee_name.strip() and employee_id.strip():
+            percentage = (
+                employee_actual / employee_target * 100
+                if employee_target > 0
+                else 0
+            )
+            st.metric("Achievement", f"{percentage:.1f}%")
+            st.metric("Actual Production", employee_actual)
+            st.metric("Daily Target", employee_target)
+        else:
+            st.warning("Please enter Employee Name and Employee ID.")
+
+with team_tab:
+    st.subheader("Team Performance Report")
+
+    with st.form("team_performance_form"):
+        team_name = st.text_input("Team Name")
+        team_target = st.number_input(
+            "Team Daily Target (units)", min_value=0, step=1
+        )
+        team_actual = st.number_input(
+            "Team Actual Production (units)", min_value=0, step=1
+        )
+
+        team_submit = st.form_submit_button(
+            "Calculate Team Performance"
+        )
+
+    if team_submit:
+        if team_name.strip():
+            team_percentage = (
+                team_actual / team_target * 100
+                if team_target > 0
+                else 0
+            )
+            st.metric("Team Achievement", f"{team_percentage:.1f}%")
+            st.metric("Team Production", team_actual)
+            st.metric("Team Target", team_target)
+        else:
+            st.warning("Please enter a Team Name.")
