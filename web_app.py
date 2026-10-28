@@ -140,4 +140,4 @@ else:
         }
 
         st.subheader("Production vs Target")
-        st.bar_chart(chart_data)
+        st.bar_chart(chart_data, stack=False)
