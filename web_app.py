@@ -1,4 +1,4 @@
-⁶import csv
+import csv
 
 import streamlit as st
 
