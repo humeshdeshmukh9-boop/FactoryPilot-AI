@@ -210,3 +210,25 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+import csv
+import os
+
+def save_performance_report(report, filename):
+    file_exists = os.path.exists(filename)
+
+    with open(filename, "a", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=report.keys())
+
+        if not file_exists:
+            writer.writeheader()
+
+        writer.writerow(report)
+
+
+def read_performance_reports(filename):
+    if not os.path.exists(filename):
+        return []
+
+    with open(filename, "r", newline="", encoding="utf-8") as file:
+        return list(csv.DictReader(file))
