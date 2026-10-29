@@ -4,6 +4,8 @@ import streamlit as st
 
 import main as reports
 
+import os
+
 
 st.set_page_config(
     page_title="FactoryPilot AI",
@@ -170,6 +172,17 @@ with employee_tab:
 
     if employee_submit:
         if employee_name.strip() and employee_id.strip():
+                        employee_report = {
+                "employee_name": employee_name.strip(),
+                "employee_id": employee_id.strip(),
+                "daily_target": employee_target,
+                "actual_production": employee_actual,
+            }
+
+            reports.save_performance_report(
+                employee_report,
+                "employee_performance.csv"
+)
             percentage = (
                 employee_actual / employee_target * 100
                 if employee_target > 0
@@ -199,6 +212,16 @@ with team_tab:
 
     if team_submit:
         if team_name.strip():
+                        team_report = {
+                "team_name": team_name.strip(),
+                "daily_target": team_target,
+                "actual_production": team_actual,
+            }
+
+            reports.save_performance_report(
+                team_report,
+                "team_performance.csv"
+            )
             team_percentage = (
                 team_actual / team_target * 100
                 if team_target > 0
