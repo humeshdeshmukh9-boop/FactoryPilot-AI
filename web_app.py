@@ -169,31 +169,32 @@ with employee_tab:
         employee_submit = st.form_submit_button(
             "Calculate Performance"
         )
+ 
+        if employee_submit:
+                if employee_name.strip() and employee_id.strip():
+                    employee_report = {
+                        "employee_name": employee_name.strip(),
+                        "employee_id": employee_id.strip(),
+                        "daily_target": employee_target,
+                        "actual_production": employee_actual,
+                    }
 
-    if employee_submit:
-        if employee_name.strip() and employee_id.strip():
-                                    employee_report = {     
-                "employee_name": employee_name.strip(),
-                "employee_id": employee_id.strip(),
-                "daily_target": employee_target,
-                "actual_production": employee_actual,
-            }
+                    reports.save_performance_report(
+                        employee_report,
+                        "employee_performance.csv"
+                    )
 
-                  reports.save_performance_report(
-                    employee_report,
-                    "employee_performance.csv"
-        )
-                            percentage = (                
-                employee_actual / employee_target * 100
-                if employee_target > 0
-                else 0
-            )
-            st.metric("Achievement", f"{percentage:.1f}%")
-            st.metric("Actual Production", employee_actual)
-            st.metric("Daily Target", employee_target)
-        else:
-            st.warning("Please enter Employee Name and Employee ID.")
+                    percentage = (
+                        employee_actual / employee_target * 100
+                        if employee_target > 0
+                        else 0
+                    )
 
+                    st.metric("Achievement", f"{percentage:.1f}%")
+                    st.metric("Actual Production", employee_actual)
+                    st.metric("Daily Target", employee_target)
+                else:
+                    st.warning("Please enter Employee Name and Employee ID.")
 with team_tab:
     st.subheader("Team Performance Report")
 
