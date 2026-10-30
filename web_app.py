@@ -211,26 +211,28 @@ with team_tab:
             "Calculate Team Performance"
         )
 
-    if team_submit:
-                if team_name.strip():
-                   team_report = {
-                     "team_name": team_name.strip(),
-                     "daily_target": team_target,
-                     "actual_production": team_actual,
-            }
+        if team_submit:
+            if team_name.strip():
+                team_report = {
+                    "team_name": team_name.strip(),
+                    "daily_target": team_target,
+                    "actual_production": team_actual,
+                }
 
-            reports.save_performance_report(
-                team_report,
-                "team_performance.csv"
-            )
+                reports.save_performance_report(
+                    team_report,
+                    "team_performance.csv"
+                )
 
-            team_percentage = (
-                team_actual / team_target * 100
-                if team_target > 0
-                else 0
-            )
-            st.metric("Team Achievement", f"{team_percentage:.1f}%")
-            st.metric("Team Production", team_actual)
-            st.metric("Team Target", team_target)
-        else:
-            st.warning("Please enter a Team Name.")
+                team_percentage = (
+                    team_actual / team_target * 100
+                    if team_target > 0
+                    else 0
+                )
+
+                st.metric("Team Achievement", f"{team_percentage:.1f}%")
+                st.metric("Team Production", team_actual)
+                st.metric("Team Target", team_target)
+
+            else:
+                st.warning("Please enter a Team Name.")
