@@ -172,18 +172,18 @@ with employee_tab:
 
     if employee_submit:
         if employee_name.strip() and employee_id.strip():
-                        employee_report = {
+                                    employee_report = {     
                 "employee_name": employee_name.strip(),
                 "employee_id": employee_id.strip(),
                 "daily_target": employee_target,
                 "actual_production": employee_actual,
             }
 
-            reports.save_performance_report(
-                employee_report,
-                "employee_performance.csv"
-)
-            percentage = (
+                            reports.save_performance_report(
+                    employee_report,
+                    "employee_performance.csv"
+        )
+                            percentage = (                
                 employee_actual / employee_target * 100
                 if employee_target > 0
                 else 0
