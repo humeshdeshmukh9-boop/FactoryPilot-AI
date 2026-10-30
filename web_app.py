@@ -213,10 +213,10 @@ with team_tab:
 
     if team_submit:
                 if team_name.strip():
-            team_report = {
-                "team_name": team_name.strip(),
-                "daily_target": team_target,
-                "actual_production": team_actual,
+                   team_report = {
+                     "team_name": team_name.strip(),
+                     "daily_target": team_target,
+                     "actual_production": team_actual,
             }
 
             reports.save_performance_report(
