@@ -212,8 +212,8 @@ with team_tab:
         )
 
     if team_submit:
-        if team_name.strip():
-                        team_report = {
+                if team_name.strip():
+            team_report = {
                 "team_name": team_name.strip(),
                 "daily_target": team_target,
                 "actual_production": team_actual,
@@ -223,6 +223,7 @@ with team_tab:
                 team_report,
                 "team_performance.csv"
             )
+
             team_percentage = (
                 team_actual / team_target * 100
                 if team_target > 0
