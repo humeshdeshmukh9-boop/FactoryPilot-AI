@@ -239,5 +239,10 @@ with team_tab:
 
 with voice_tab:
     st.subheader("AI Voice Assistant")
-    st.write("Welcome to FactoryPilot AI Voice Assistant!")
-    st.info("Voice assistant setup will be added here.")
+    st.write("Speak to FactoryPilot AI")
+
+    audio_value = st.audio_input("Record your voice")
+
+    if audio_value:
+        st.audio(audio_value)
+        st.success("Voice recording received!")
