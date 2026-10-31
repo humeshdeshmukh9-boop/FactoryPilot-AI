@@ -149,8 +149,8 @@ else:
 st.header("Employee Performance")
 st.caption("Track individual and team production performance")
 
-employee_tab, team_tab = st.tabs(
-    ["Individual Employees", "Team Performance"]
+employee_tab, team_tab, voice_tab = st.tabs(
+    ["Individual Employees", "Team Performance", "AI Voice Assistant"]
 )
 
 with employee_tab:
@@ -236,3 +236,8 @@ with team_tab:
 
             else:
                 st.warning("Please enter a Team Name.")
+
+with voice_tab:
+    st.subheader("AI Voice Assistant")
+    st.write("Welcome to FactoryPilot AI Voice Assistant!")
+    st.info("Voice assistant setup will be added here.")
